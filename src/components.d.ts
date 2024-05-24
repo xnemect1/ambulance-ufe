@@ -6,17 +6,34 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface XnemAmbulanceWlApp {
+        "ambulanceId": string;
+        "apiBase": string;
+        "basePath": string;
+    }
     interface XnemAmbulanceWlEditor {
         "entryId": string;
     }
     interface XnemAmbulanceWlList {
+        "ambulanceId": string;
+        "apiBase": string;
     }
 }
 export interface XnemAmbulanceWlEditorCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLXnemAmbulanceWlEditorElement;
 }
+export interface XnemAmbulanceWlListCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLXnemAmbulanceWlListElement;
+}
 declare global {
+    interface HTMLXnemAmbulanceWlAppElement extends Components.XnemAmbulanceWlApp, HTMLStencilElement {
+    }
+    var HTMLXnemAmbulanceWlAppElement: {
+        prototype: HTMLXnemAmbulanceWlAppElement;
+        new (): HTMLXnemAmbulanceWlAppElement;
+    };
     interface HTMLXnemAmbulanceWlEditorElementEventMap {
         "editor-closed": string;
     }
@@ -34,25 +51,46 @@ declare global {
         prototype: HTMLXnemAmbulanceWlEditorElement;
         new (): HTMLXnemAmbulanceWlEditorElement;
     };
+    interface HTMLXnemAmbulanceWlListElementEventMap {
+        "entry-clicked": string;
+    }
     interface HTMLXnemAmbulanceWlListElement extends Components.XnemAmbulanceWlList, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLXnemAmbulanceWlListElementEventMap>(type: K, listener: (this: HTMLXnemAmbulanceWlListElement, ev: XnemAmbulanceWlListCustomEvent<HTMLXnemAmbulanceWlListElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLXnemAmbulanceWlListElementEventMap>(type: K, listener: (this: HTMLXnemAmbulanceWlListElement, ev: XnemAmbulanceWlListCustomEvent<HTMLXnemAmbulanceWlListElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLXnemAmbulanceWlListElement: {
         prototype: HTMLXnemAmbulanceWlListElement;
         new (): HTMLXnemAmbulanceWlListElement;
     };
     interface HTMLElementTagNameMap {
+        "xnem-ambulance-wl-app": HTMLXnemAmbulanceWlAppElement;
         "xnem-ambulance-wl-editor": HTMLXnemAmbulanceWlEditorElement;
         "xnem-ambulance-wl-list": HTMLXnemAmbulanceWlListElement;
     }
 }
 declare namespace LocalJSX {
+    interface XnemAmbulanceWlApp {
+        "ambulanceId"?: string;
+        "apiBase"?: string;
+        "basePath"?: string;
+    }
     interface XnemAmbulanceWlEditor {
         "entryId"?: string;
         "onEditor-closed"?: (event: XnemAmbulanceWlEditorCustomEvent<string>) => void;
     }
     interface XnemAmbulanceWlList {
+        "ambulanceId"?: string;
+        "apiBase"?: string;
+        "onEntry-clicked"?: (event: XnemAmbulanceWlListCustomEvent<string>) => void;
     }
     interface IntrinsicElements {
+        "xnem-ambulance-wl-app": XnemAmbulanceWlApp;
         "xnem-ambulance-wl-editor": XnemAmbulanceWlEditor;
         "xnem-ambulance-wl-list": XnemAmbulanceWlList;
     }
@@ -61,6 +99,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "xnem-ambulance-wl-app": LocalJSX.XnemAmbulanceWlApp & JSXBase.HTMLAttributes<HTMLXnemAmbulanceWlAppElement>;
             "xnem-ambulance-wl-editor": LocalJSX.XnemAmbulanceWlEditor & JSXBase.HTMLAttributes<HTMLXnemAmbulanceWlEditorElement>;
             "xnem-ambulance-wl-list": LocalJSX.XnemAmbulanceWlList & JSXBase.HTMLAttributes<HTMLXnemAmbulanceWlListElement>;
         }
