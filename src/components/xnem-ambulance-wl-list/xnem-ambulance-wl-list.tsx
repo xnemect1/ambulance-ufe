@@ -1,4 +1,4 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Event, EventEmitter, Host, h } from '@stencil/core';
 
 @Component({
   tag: 'xnem-ambulance-wl-list',
@@ -6,6 +6,7 @@ import { Component, Host, h } from '@stencil/core';
   shadow: true,
 })
 export class XnemAmbulanceWlList {
+  @Event({ eventName: 'entry-clicked' }) entryClicked: EventEmitter<string>;
   waitingPatients: any[];
 
   private async getWaitingPatientsAsync() {
@@ -45,8 +46,8 @@ export class XnemAmbulanceWlList {
     return (
       <Host>
         <md-list>
-          {this.waitingPatients.map(patient => (
-            <md-list-item>
+          {this.waitingPatients.map((patient, index) => (
+            <md-list-item onClick={() => this.entryClicked.emit(index.toString())}>
               <div slot="headline">{patient.name}</div>
               <div slot="supporting-text">{'Predpokladaný vstup: ' + this.isoDateToLocale(patient.estimatedStart)}</div>
               <md-icon slot="start">person</md-icon>
