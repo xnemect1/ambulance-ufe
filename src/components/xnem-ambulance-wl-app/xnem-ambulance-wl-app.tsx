@@ -18,6 +18,7 @@ export class XnemAmbulanceWlApp {
   @Prop() ambulanceId: string;
 
   componentWillLoad() {
+    console.log('APP => componentWillLoad');
     const baseUri = new URL(this.basePath, document.baseURI || '/').pathname;
 
     const toRelative = (path: string) => {
@@ -34,6 +35,7 @@ export class XnemAmbulanceWlApp {
       }
       let path = new URL((ev as any).destination.url).pathname;
       toRelative(path);
+      console.log('Updated relative path:', this.relativePath); // Debug log
     });
 
     toRelative(location.pathname);
@@ -46,9 +48,11 @@ export class XnemAmbulanceWlApp {
     if (this.relativePath.startsWith('entry/')) {
       element = 'editor';
       entryId = this.relativePath.split('/')[1];
+      console.log('Current element:', element, 'Entry ID:', entryId); // Debug log
     }
 
     const navigate = (path: string) => {
+      console.log('Navigating to:', path); // Debug log
       const absolute = new URL(path, new URL(this.basePath, document.baseURI)).pathname;
       window.navigation.navigate(absolute);
     };
@@ -56,7 +60,12 @@ export class XnemAmbulanceWlApp {
     return (
       <Host>
         {element === 'editor' ? (
-          <xnem-ambulance-wl-editor entry-id={entryId} oneditor-closed={() => navigate('./list')}></xnem-ambulance-wl-editor>
+          <xnem-ambulance-wl-editor
+            entry-id={entryId}
+            ambulance-id={this.ambulanceId}
+            api-base={this.apiBase}
+            oneditor-closed={() => navigate('./list')}
+          ></xnem-ambulance-wl-editor>
         ) : (
           <xnem-ambulance-wl-list
             ambulance-id={this.ambulanceId}
